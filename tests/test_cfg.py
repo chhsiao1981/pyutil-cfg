@@ -3,10 +3,10 @@
 import unittest
 import logging
 
-from {{cookiecutter.pkg_name}} import {{cookiecutter.module}}
+from pyutil_cfg import cfg
 
 
-class Test{{cookiecutter.Module}}(unittest.TestCase):
+class TestCfg(unittest.TestCase):
 
     def setUp(self):
         pass
