@@ -12,7 +12,7 @@ def init(name, ini_filename, log_ini_filename='', params=None):
     config = _init_ini_file(name, ini_filename, logger)
     config = _post_init_config(params, config, logger)
 
-    logger.warning('pyutil_cfg: to return: logger: %s config: %s', logger, config)
+    logger.debug('pyutil_cfg: to return: name: %s logger: %s config: %s', name, logger, config)
 
     return logger, config
 
@@ -26,7 +26,10 @@ def _init_logger(name, log_ini_filename, ini_filename):
     if not log_ini_filename:
         return None
 
-    logging.config.fileConfig(log_ini_filename, disable_existing_loggers=False)
+    try:
+        logging.config.fileConfig(log_ini_filename, disable_existing_loggers=False)
+    except:
+        pass
 
     return logger
 
@@ -49,6 +52,10 @@ def _init_ini_file_core(ini_filename, section, logger):
     '''
     config_parser = SafeConfigParser()
     config_parser.read(ini_filename)
+    sections = config_parser.sections()
+    if section not in sections:
+        return {}
+
     options = config_parser.options(section)
     config = {option: _init_ini_file_parse_option(option, section, config_parser, logger) for option in options}
 
@@ -99,7 +106,5 @@ def _post_init_config(params, config, logger):
             logger.warning('params will be overwrite: key: %s origin: %s new: %s', k, config[k], v)
 
     config.update(params)
-
-    logger.debug('_post_init_config: done: config: %s', config)
 
     return config
