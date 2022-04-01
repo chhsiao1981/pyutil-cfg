@@ -4,7 +4,7 @@ from configparser import SafeConfigParser
 import logging
 import logging.config
 
-import pyutil_json as json
+import json
 
 
 def init(name, ini_filename, log_ini_filename='', params=None):

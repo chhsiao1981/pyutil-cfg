@@ -14,7 +14,6 @@ setuptools.setup(
     url="https://github.com/chhsiao1981/pyutil_cfg",
     packages=setuptools.find_packages(exclude=["tests"]),
     install_requires=[
-        'pyutil_json @ git+https://github.com/chhsiao1981/pyutil_json.git@v0.0.1#egg=pyutil_json',
     ],
     classifiers=[
         "Programming Language :: Python :: 3",
