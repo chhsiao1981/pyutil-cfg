@@ -36,7 +36,7 @@ def _init_logger(name, log_ini_filename, ini_filename):
 
 def _init_ini_file(name, ini_filename, logger):
     '''
-    setup rx_med_analysis:main config
+    setup name:main config
     '''
     section = name + ':main'
 
@@ -50,6 +50,9 @@ def _init_ini_file_core(ini_filename, section, logger):
     get ini conf from section
     return: config: {key: val} val: json_loaded
     '''
+    if not ini_filename:
+        return {}
+
     config_parser = SafeConfigParser()
     config_parser.read(ini_filename)
     sections = config_parser.sections()
@@ -95,15 +98,13 @@ def _post_init_config(params, config, logger):
     '''
     add additional parameters into config
     '''
-    logger.debug('params: %s', params)
 
     if not params:
-        logger.debug('_post_init_config: done: config: %s', config)
         return config
 
     for (k, v) in params.items():
         if k in config:
-            logger.warning('params will be overwrite: key: %s origin: %s new: %s', k, config[k], v)
+            logger.warning('config will be overwritten by params: key: %s origin: %s new: %s', k, config[k], v)
 
     config.update(params)
 

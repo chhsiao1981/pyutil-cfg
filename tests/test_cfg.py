@@ -22,7 +22,13 @@ class TestCfg(unittest.TestCase):
         assert config['test_ini'] == 'test2'
         assert config['test_list'] == ['test0', 'test1', 2]
         assert config['test_dict'] == {'test_key': 'test_val', 'test_key2': 'test_val2'}
-        assert config['test_set'] == set(["a", "b", "c"])
+        assert config['test_set'] == set(['a', 'b', 'c'])
+        assert config['test_list_dict'] == [
+            {'A': 1, 'B': 'b'},
+            {'A': 2, 'B': 'c'},
+            {'A': 3, 'B': 'd'},
+            {'A': 4, 'B': 'e'},
+        ]
 
     def test_init_no_logger(self):
         logger, config = cfg.init('test_cfg', 'tests/data/test_no_logger.ini', params={'test_params': 'test'})
