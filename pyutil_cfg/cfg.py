@@ -24,7 +24,7 @@ def _init_logger(name, log_ini_filename, ini_filename):
         log_ini_filename = ini_filename
 
     if not log_ini_filename:
-        return None
+        return logger
 
     try:
         logging.config.fileConfig(log_ini_filename, disable_existing_loggers=False)
