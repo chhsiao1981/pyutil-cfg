@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyutil-cfg",
-    version='0.0.5',
+    version='0.0.6',
     author="chhsiao",
     author_email="hsiao.chuanheng@gmail.com",
     description="python util for cfg (configurations)",
