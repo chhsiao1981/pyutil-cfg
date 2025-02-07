@@ -1,10 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from enum import Enum
-from typing import Optional, Any, TypedDict, NotRequired
+from typing import Optional, Any, TypedDict
+try:
+    from typing import NotRequired
+except:  # noqa for 3.10
+    from typing_extensions import NotRequired
 
 from configparser import ConfigParser, RawConfigParser
-import tomllib
+try:
+    import tomllib
+except:  # noqa for 3.10
+    import tomli as tomllib
+
 import logging
 import logging.config
 
@@ -81,7 +89,16 @@ class Config(TypedDict):
     '''
 
 
-def init(name: str, filename: str, log_name: str = '', log_filename: str = '', extra_params: Optional[dict] = None, is_extra_params_in_file_ok: bool = True, is_skip_extra_params_in_file: bool = False, show_config: Optional[int] = None) -> tuple[logging.Logger, Config]:
+def init(
+        name: str,
+        filename: str,
+        log_name: str = '',
+        log_filename: str = '',
+        extra_params: Optional[dict] = None,
+        is_extra_params_in_file_ok: bool = True,
+        is_skip_extra_params_in_file: bool = False,
+        show_config: Optional[int] = None
+) -> tuple[logging.Logger, Config]:
     '''
     init
 
@@ -123,10 +140,16 @@ def init(name: str, filename: str, log_name: str = '', log_filename: str = '', e
     # config
     config_from_file = _config_from_file(filename)
     config = _init_config(name, config_from_file)
-    config = _post_init_config(config, extra_params, is_extra_params_in_file_ok, is_skip_extra_params_in_file, logger)
+    config = _post_init_config(
+        config,
+        extra_params,
+        is_extra_params_in_file_ok,
+        is_skip_extra_params_in_file,
+        logger,
+    )
 
     if show_config is not None:
-        logger.log(show_config, f'pyutil_cfg.init: name: {name} logger-name: {log_name} config: {config}')
+        logger.log(show_config, f'pyutil_cfg.init: name: {name} logger-name: {log_name} config: {config}')   # noqa
 
     return logger, config
 
@@ -150,9 +173,14 @@ def _config_from_toml_file(filename: str) -> Config:
 def _init_logger(name: str, config: Config) -> logging.Logger:
     logger = logging.getLogger(name)
 
-    logger_config = {section: val for section, val in config.items() if _is_valid_logger_section(section)}
+    logger_config = {
+        section: val
+        for section, val
+        in config.items()
+        if _is_valid_logger_section(section)
+    }
 
-    if 'loggers' not in logger_config and 'formatters' not in logger_config and 'handlers' not in logger_config:
+    if 'loggers' not in logger_config and 'formatters' not in logger_config and 'handlers' not in logger_config:  # noqa
         return logger
 
     logger_configparser = RawConfigParser()
@@ -160,11 +188,15 @@ def _init_logger(name: str, config: Config) -> logging.Logger:
         logger_configparser[section] = val_by_section
 
     # following logging.config.fileConfig default setting of disable_existing_loggers
-    #
-    disable_existing_loggers = _val_to_json(logger_config.get('loggers', {}).get('disable_existing_loggers', True))
+    loggers: dict = logger_config.get('loggers', {})
+    disable_existing_loggers = loggers.get('disable_existing_loggers', True)
+    disable_existing_loggers = _val_to_json(disable_existing_loggers)
 
     try:
-        logging.config.fileConfig(logger_configparser, disable_existing_loggers=disable_existing_loggers)
+        logging.config.fileConfig(
+            logger_configparser,
+            disable_existing_loggers=disable_existing_loggers,
+        )
     except Exception as e:
         logging.warning(f'unable to setup logger: e: {e}')
 
@@ -221,7 +253,7 @@ def _val_to_json(val: Any) -> Any:
     orig_v = val
     try:
         val = json.loads(val)
-    except:
+    except:  # noqa
         val = orig_v
 
     return val
@@ -241,7 +273,14 @@ def _is_valid_logger_section(section: str) -> bool:
     return False
 
 
-def _post_init_config(config: dict, extra_params: Optional[dict], is_extra_params_in_file_ok: bool, is_skip_extra_params_in_file: bool, logger: logging.Logger) -> dict:
+def _post_init_config(
+        config: dict,
+        extra_params:
+        Optional[dict],
+        is_extra_params_in_file_ok: bool,
+        is_skip_extra_params_in_file: bool,
+        logger: logging.Logger,
+) -> dict:
     '''
     add additional parameters into config
     '''
@@ -253,7 +292,7 @@ def _post_init_config(config: dict, extra_params: Optional[dict], is_extra_param
     if not is_extra_params_in_file_ok:
         for k, v in extra_params.items():
             if k in config:
-                logger.warning('config will be overwritten by extras: key: %s origin: %s new: %s', k, config[k], v)
+                logger.warning('config will be overwritten by extras: key: %s origin: %s new: %s', k, config[k], v)  # noqa
 
     # set valid extras, with is_skip_extra_in_file
     valid_extras = extra_params
