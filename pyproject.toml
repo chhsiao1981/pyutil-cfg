@@ -16,7 +16,7 @@ authors = [
 ]
 description = 'python util for cfg (configurations)'
 readme = 'README.md'
-license = {file = 'LICENSE.txt'}
+license = {file = 'LICENSE'}
 keywords = [
 ]
 classifiers = [
