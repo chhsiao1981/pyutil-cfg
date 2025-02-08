@@ -6,7 +6,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = 'pyutil-cfg'
-version = '0.1.0'
+version = '0.1.1'
 dependencies = [
     'tomli==2.2.1; python_version < "3.11"',
     'typing-extensions==4.12.2; python_version < "3.11"',
