@@ -90,8 +90,8 @@ class Config(TypedDict):
 
 
 def init(
-        name: str,
-        filename: str,
+        name: str = '',
+        filename: str = '',
         log_name: str = '',
         log_filename: str = '',
         extra_params: Optional[dict] = None,
@@ -155,6 +155,9 @@ def init(
 
 
 def _config_from_file(filename: str) -> tuple[Config]:
+    if filename == '':
+        return {}
+
     if filename.endswith('.toml'):
         config = _config_from_toml_file(filename)
         return config
