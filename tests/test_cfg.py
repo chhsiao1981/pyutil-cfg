@@ -14,6 +14,12 @@ class TestCfg(unittest.TestCase):
     def tearDown(self):
         pass
 
+    def test_init_no_name_filename(self):
+        logger, config = cfg.init()
+
+        assert logger is logging.root
+        assert config == {}
+
     def test_init_simpliest(self):
         logger, config = cfg.init('test_cfg', 'tests/data/test.ini')
 

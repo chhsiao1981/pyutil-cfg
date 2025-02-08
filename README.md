@@ -17,10 +17,10 @@ This package helps parsing `.toml` configurations and `json`-like configurations
 ### `.toml`
 For the `.toml` files, the format follows [TOML](https://toml.io/en/) specification.
 
-You can check [production.tmpl.toml](https://github.com/chhsiao1981/pyutil-cfg/blob/main/production.tmpl.toml) for more details.
+You can check [`production.tmpl.toml`](https://github.com/chhsiao1981/pyutil-cfg/blob/main/production.tmpl.toml) or [`test/data`](https://github.com/chhsiao1981/pyutil-cfg/tree/main/tests/data) for more details.
 
 ### `.ini`
-For the `.ini` files, you can check [production.tmpl.ini](https://github.com/chhsiao1981/pyutil-cfg/blob/main/production.tmpl.ini) for more details.
+For the `.ini` files, you can check [`production.tmpl.ini`](https://github.com/chhsiao1981/pyutil-cfg/blob/main/production.tmpl.ini) or [`test/data`](https://github.com/chhsiao1981/pyutil-cfg/tree/main/tests/data) for more details.
 
 Assume that you have the following `development.ini`:
 
@@ -67,7 +67,7 @@ Then with the following code:
 
     import pyutil_cfg as cfg
 
-    extra_params = {}
+    extra_params = {'test_params': 'test'}
 
     logger, config = cfg.init(name, filename, extra_params=extra_params)
 
@@ -83,7 +83,7 @@ Only warning logs if this parameter is set as `False` and some extra parameters 
 
     logger, config = cfg.init(name, filename, is_extra_params_in_file_ok=True)
 
-## Skip extra parameters if they are already in the configuration file.
+## Skip extra parameters if already in the configuration file. (default: `False`)
 
 Skip extram parameters if they are already in the configuration file.
 
@@ -91,7 +91,7 @@ Skip extram parameters if they are already in the configuration file.
 
     logger, config = cfg.init(name, filename, is_skip_extra_params_in_file=True)
 
-## Show configuration before returning.
+## Show configuration before returning. (default: `False`)
 
 Setup the log-level to show the computed configurations before return.
 None as no-show.
@@ -119,5 +119,6 @@ logger, config = cfg.init(name, filename, show_config=logging.INFO)
 
 # Misc
 
+* Reason retaining `pyutil_` prefix: `cfg` is an extremely common name. Retaining `pyutil_` to avoid naming conflict.
 * Reason not including .json: not a good file format for config.
 * Reason not including .yaml: not the standard library.
