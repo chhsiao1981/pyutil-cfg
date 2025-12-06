@@ -6,7 +6,7 @@ build-backend = 'setuptools.build_meta'
 
 [project]
 name = 'pyutil-cfg'
-version = '0.1.1'
+version = '0.2.0'
 dependencies = [
     'tomli==2.2.1; python_version < "3.11"',
     'typing-extensions==4.12.2; python_version < "3.11"',
@@ -34,7 +34,7 @@ requires-python = ">= 3.10"
 [project.urls]
 # Homepage      = ''
 # Documentation = ''
-# Repository    = ''
+Repository    = 'https://github.com/chhsiao1981/pyutil-cfg'
 # 'Bug Tracker' = ''
 # Changelog = ''
 
