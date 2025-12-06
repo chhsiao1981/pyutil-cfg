@@ -63,6 +63,14 @@ Then with the following code:
 
     logger, config = cfg.init(name, filename, log_name, log_filename)
 
+## With default parameters
+
+    import pyutil_cfg as cfg
+
+    default_params = {'test_params': 'default'}
+
+    logger, config = cfg.init(name, filename, default_params=default_params)
+
 ## Additional customized config parameters (specified as dict)
 
     import pyutil_cfg as cfg

@@ -1,2 +1,1 @@
-{{cookiecutter.project_name}}
-==========
+# {{cookiecutter.project_name_with_dash}}
